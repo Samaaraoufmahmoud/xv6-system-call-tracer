@@ -92,7 +92,7 @@ sys_uptime(void)
   return xticks;
 }
 
-int 
+uint64 
 sys_trace(void) 
 {
   struct proc *p = myproc();
