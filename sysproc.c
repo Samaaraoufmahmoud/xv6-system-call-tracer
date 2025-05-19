@@ -92,8 +92,8 @@ sys_uptime(void)
   return xticks;
 }
 
-uint64
-int sys_trace(void) 
+int 
+sys_trace(void) 
 {
   struct proc *p = myproc();
   p->tracing = 1;
