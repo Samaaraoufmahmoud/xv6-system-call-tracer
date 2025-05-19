@@ -9,7 +9,7 @@ struct sleeplock;
 struct stat;
 struct superblock;
 
-int sys_trace(void);
+uint64 sys_trace(void);
 
 // bio.c
 void            binit(void);
