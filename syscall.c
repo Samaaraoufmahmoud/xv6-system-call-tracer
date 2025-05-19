@@ -102,7 +102,7 @@ extern uint64 sys_unlink(void);
 extern uint64 sys_link(void);
 extern uint64 sys_mkdir(void);
 extern uint64 sys_close(void);
-extern  int   sys_trace(void);
+extern uint64 sys_trace(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
@@ -184,11 +184,11 @@ syscall(void)
             printf("%d", arg_val);
             if (i < 4)
             {
-               cprintf(", ");
+               printf(", ");
             }
             else 
             { 
-              break 
+              break; 
             }
           }
         }
