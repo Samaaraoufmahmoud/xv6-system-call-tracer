@@ -107,6 +107,6 @@ uptime:
  ret
 .global trace
 trace:
-  li a7, SYS_trace
-  ecall
-  ret
+ li a7, SYS_trace
+ ecall
+ ret
