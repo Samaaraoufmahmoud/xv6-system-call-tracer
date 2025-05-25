@@ -164,46 +164,39 @@ syscall(void)
   struct proc *p = myproc();
 
   num = p->trapframe->a7;
+
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) 
   {
-    // Use num to lookup the system call function for num, call it,
-    // and store its return value in p->trapframe->a0
     int retval = 0;
-    
-    p->trapframe->a0 = retval;  // Set return value in a0
-     
-    // Print syscall name and arguments if tracing is enabled
-    if (p->tracing) 
-    {
+
+    // Log before syscall if tracing is enabled
+    if (p->tracing) {
       extern char *syscall_names[];
       printf("pid %d: syscall %s(", p->pid, syscall_names[num]);
 
       int arg;
-      for (int i = 0; i < 5; i++)
-        {
-          argint(i, &arg);
-          printf("%d", arg);
-          if (i < 4)
-          {
-            printf(", ");
-          }
-          else 
-          { 
-            break; 
-          }
+      for (int i = 0; i < 5; i++) {
+        argint(i, &arg);
+        printf("%d", arg);
+        if (i < 4)
+          printf(", ");
       }
-        printf(")\n");
-    } 
-    retval = syscalls[num]();            // Call the actual syscall
+      printf(")\n");
+    }
 
-    if (p->tracing) 
-    {
+    // Execute syscall
+    retval = syscalls[num]();
+    p->trapframe->a0 = retval;
+
+    // Log return value
+    if (p->tracing) {
       printf("pid %d: -> return %d\n", p->pid, retval);
     }
-    else {
+  } 
+  else 
+  {
     printf("%d %s: unknown sys call %d\n",
-            p->pid, p->name, num);
+           p->pid, p->name, num);
     p->trapframe->a0 = -1;
-    }
   }
 }
